@@ -327,7 +327,7 @@ export function makeField(scene, options = {}) {
       // горизонтали на 16:9 — это и есть левый/правый край экрана).
       // Меряем ширину текста вместе с ореолом и масштабируем шрифт так,
       // чтобы итог совпал с targetW.
-      const targetW = cw * 0.78;
+      const targetW = cw * 0.78 / 1.5;
       let fs = Math.round(ch * 0.45);
       {
         const probe = document.createElement('canvas').getContext('2d');
