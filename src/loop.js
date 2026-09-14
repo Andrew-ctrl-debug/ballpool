@@ -17,8 +17,11 @@
 import { renderer, scene, camera, field } from './main.js';
 import { createPostFX } from './postfx.js';
 
-// Пост-обработка: afterimage/"рябь"
-const postFX = createPostFX(renderer);
+// Пост-обработка: afterimage/"рябь". Создаём лениво, на первом кадре:
+// loop.js подключается из main.js (циклический импорт), и в момент
+// вызова createPostFX(renderer) — на верхнем уровне модуля — renderer
+// ещё не инициализирован (TDZ) → страница падала бы белым экраном.
+let postFX = null;
 
 // Флаг: крутится ли цикл сейчас
 let running = false;
@@ -49,12 +52,19 @@ function frame(now) {
   }
 
   // Отрисовываем кадр (через пост-обработку — эффект "ряби")
-  postFX.render(
-    renderer.domElement.width,
-    renderer.domElement.height,
-    () => field.drawField(),
-    () => renderer.render(scene, camera)
-  );
+  try {
+    if (!postFX) postFX = createPostFX(renderer);
+    postFX.render(
+      renderer.domElement.width,
+      renderer.domElement.height,
+      () => field.drawField(),
+      () => renderer.render(scene, camera)
+    );
+  } catch (err) {
+    console.error('PostFX error, falling back to direct render:', err);
+    field.drawField();
+    renderer.render(scene, camera);
+  }
 
   // Продолжаем цикл в следующем кадре
   running = true;

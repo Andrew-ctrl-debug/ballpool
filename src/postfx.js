@@ -11,14 +11,21 @@
 import * as THREE from '../vendor/three/build/three.module.js';
 
 export function createPostFX(renderer) {
-  const rtScene = new THREE.WebGLRenderTarget(1, 1);
-  const rtFront = new THREE.WebGLRenderTarget(1, 1);
-  const rtBack = new THREE.WebGLRenderTarget(1, 1);
+  // Буферы в цветовом пространстве sRGB (как сам канвас),
+  // чтобы не терялись цвета/контраст.
+  const makeRT = () => {
+    const rt = new THREE.WebGLRenderTarget(1, 1, { colorSpace: THREE.SRGBColorSpace });
+    return rt;
+  };
+  const rtScene = makeRT();
+  const rtFront = makeRT();
+  const rtBack = makeRT();
 
   const quadGeo = new THREE.PlaneGeometry(2, 2);
   quadGeo.frustumCulled = false;
   const quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
+  // --- Полноэкранный квад 1: смешивает свежий кадр с предыдущим следом
   const compositeMat = new THREE.ShaderMaterial({
     uniforms: {
       tCurrent: { value: null },
@@ -49,6 +56,7 @@ export function createPostFX(renderer) {
   const compositeScene = new THREE.Scene();
   compositeScene.add(new THREE.Mesh(quadGeo, compositeMat));
 
+  // --- Полноэкранный квад 2: выводит итоговый кадр на канвас
   const presentMat = new THREE.ShaderMaterial({
     uniforms: { tDiffuse: { value: null } },
     vertexShader: `
@@ -62,10 +70,7 @@ export function createPostFX(renderer) {
       uniform sampler2D tDiffuse;
       varying vec2 vUv;
       void main() {
-        vec4 c = texture2D(tDiffuse, vUv);
-        // Лёгкая гамма 2.2 — возвращаем контраст, который рендерер
-        // применяет при выводе в sRGB напрямую.
-        gl_FragColor = vec4(pow(c.rgb, vec3(1.0 / 2.2)), 1.0);
+        gl_FragColor = texture2D(tDiffuse, vUv);
       }
     `,
     depthTest: false,
