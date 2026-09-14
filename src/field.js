@@ -354,6 +354,14 @@ export function makeField(scene, options = {}) {
         ctx.strokeText(sign, cw / 2, ch / 2);
       };
 
+      const letterFill = (ctx) => {
+        ctx.font = textFont;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.letterSpacing = ls;
+        ctx.fillText(sign, cw / 2, ch / 2);
+      };
+
       // Цветная карта: чисто белая стена, букв в цвете нет
       const c = document.createElement('canvas');
       c.width = cw; c.height = ch;
@@ -364,7 +372,7 @@ export function makeField(scene, options = {}) {
       tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
       tex.colorSpace = THREE.SRGBColorSpace;
 
-      // Emissive: двойная неоновая трубка (как китайские вывески)
+      // Emissive: сплошные залитые светом буквы
       const ec = document.createElement('canvas');
       ec.width = cw; ec.height = ch;
       const eg = ec.getContext('2d');
@@ -372,54 +380,34 @@ export function makeField(scene, options = {}) {
       eg.fillRect(0, 0, cw, ch);
       eg.lineJoin = 'round';
       eg.lineCap = 'round';
-      eg.font = textFont;
-      eg.textAlign = 'center';
-      eg.textBaseline = 'middle';
-      eg.letterSpacing = ls;
-      // Мягкий ореол вокруг обеих трубок (свечение)
-      letterStroke(eg, Math.max(3, fs * 0.07));
+      // Мягкий ореол (свечение) вокруг заливки
+      letterStroke(eg, Math.max(2, fs * 0.06));
       eg.globalAlpha = 0.25;
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       eg.globalAlpha = 1;
-      // Внешняя полоса двойного контура — шире зазора, чтобы остаться видимой
-      letterStroke(eg, Math.max(4, fs * 0.1));
-      eg.strokeStyle = '#ffffff';
-      eg.stroke();
-      // Тёмный зазор — шире, чтобы полосы были дальше друг от друга
-      letterStroke(eg, Math.max(3.5, fs * 0.07));
-      eg.strokeStyle = '#000000';
-      eg.stroke();
-      // Внутренняя полоса двойного контура — тонкая, яркая
-      letterStroke(eg, Math.max(0.4, fs * 0.008));
-      eg.strokeStyle = '#ffffff';
-      eg.stroke();
+      // Сплошная заливка букв — яркая
+      letterFill(eg);
+      eg.fillStyle = '#ffffff';
+      eg.fill();
       const eTex = new THREE.CanvasTexture(ec);
       eTex.wrapS = eTex.wrapT = THREE.ClampToEdgeWrapping;
       eTex.colorSpace = THREE.SRGBColorSpace;
 
-      // Bump: выпуклые двойные трубки (два гребня)
+      // Bump: сплошные выпуклые буквы
       const bc = document.createElement('canvas');
       bc.width = cw; bc.height = ch;
       const bgc = bc.getContext('2d');
       bgc.fillStyle = '#000000';
       bgc.fillRect(0, 0, cw, ch);
       // Плавный подъём от стены
-      letterStroke(bgc, Math.max(1, fs * 0.02));
+      letterStroke(bgc, Math.max(1, fs * 0.03));
       bgc.strokeStyle = '#4a4a4a';
       bgc.stroke();
-      // Внешний гребень
-      letterStroke(bgc, Math.max(2, fs * 0.05));
-      bgc.strokeStyle = '#e0e0e0';
-      bgc.stroke();
-      // Промежуток
-      letterStroke(bgc, Math.max(1.75, fs * 0.035));
-      bgc.strokeStyle = '#000000';
-      bgc.stroke();
-      // Внутренний гребень
-      letterStroke(bgc, Math.max(0.2, fs * 0.004));
-      bgc.strokeStyle = '#ffffff';
-      bgc.stroke();
+      // Сплошная выпуклость букв
+      letterFill(bgc);
+      bgc.fillStyle = '#e0e0e0';
+      bgc.fill();
       const bumpTex = new THREE.CanvasTexture(bc);
       bumpTex.wrapS = bumpTex.wrapT = THREE.ClampToEdgeWrapping;
 
