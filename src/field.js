@@ -382,12 +382,12 @@ export function makeField(scene, options = {}) {
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       eg.globalAlpha = 1;
-      // Внешняя трубка — толстая, яркая
-      letterStroke(eg, Math.max(2.25, fs * 0.0225));
+      // Внешняя трубка — толстая, яркая (шире, чем зазор, чтобы осталась наружной обводкой)
+      letterStroke(eg, Math.max(8, fs * 0.08));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
-      // Промежуток между трубками (чёрный — пропуск света)
-      letterStroke(eg, Math.max(2.4, fs * 0.024));
+      // Промежуток между трубками (чёрный — пропуск света, ×3)
+      letterStroke(eg, Math.max(7.2, fs * 0.072));
       eg.strokeStyle = '#000000';
       eg.stroke();
       // Внутренняя трубка — тонкая, яркая
