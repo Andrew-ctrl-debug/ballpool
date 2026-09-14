@@ -338,7 +338,7 @@ export function makeField(scene, options = {}) {
           + Math.max(9, fs * 0.135);
         fs = Math.max(12, Math.round(fs * (targetW / w)));
       } else {
-        fs = Math.round(ch * 0.32 / 3 * 1.5 * 2 * 0.5);
+        fs = Math.round(ch * 0.32 / 3 * 1.5 * 2 * 0.5 * 0.5);
       }
       const textFont = `900 ${fs}px ${fontFamily}`;
       const ls = `${Math.round(fs * 0.14)}px`;
