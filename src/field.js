@@ -322,11 +322,14 @@ export function makeField(scene, options = {}) {
       // Размер шрифта подбираем по реальной ширине надписи, чтобы
       // любой текст (и «ГТО», и «GRAND») влезал на стену целиком.
       const fontFamily = '"TT Squares", "TTSquares", "Bebas Neue", "Arial Black", Impact, sans-serif';
-      let fs = Math.round(ch * 0.28);
+      // Надпись растягивается ровно на видимую полосу задней стены
+      // (сама стена в 1.8 раза шире кадра, камера видит ~78% её по
+      // горизонтали на 16:9 — это и есть левый/правый край экрана).
+      // Меряем ширину текста вместе с ореолом и масштабируем шрифт так,
+      // чтобы итог совпал с targetW.
+      const targetW = cw * 0.78;
+      let fs = Math.round(ch * 0.45);
       {
-        // Пробуем измерить ширину текста и при необходимости уменьшаем шрифт.
-        // Учитываем межбуквенный разрыв + запас на внешний ореол обводки,
-        // чтобы крайние буквы (G и D) не срезались границей стены даже впритык.
         const probe = document.createElement('canvas').getContext('2d');
         probe.font = `900 ${fs}px ${fontFamily}`;
         probe.lineJoin = 'round';
@@ -335,10 +338,7 @@ export function makeField(scene, options = {}) {
         const w = probe.measureText(sign).width
           + Math.round(fs * 0.14) * (sign.length - 1)
           + Math.max(9, fs * 0.135);
-        const maxW = cw * 0.96;
-        if (w > maxW) {
-          fs = Math.max(8, Math.round(fs * (maxW / w)));
-        }
+        fs = Math.max(12, Math.round(fs * (targetW / w)));
       }
       const textFont = `900 ${fs}px ${fontFamily}`;
       const ls = `${Math.round(fs * 0.14)}px`;
