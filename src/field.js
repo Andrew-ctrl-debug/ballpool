@@ -328,7 +328,7 @@ export function makeField(scene, options = {}) {
         const probe = document.createElement('canvas').getContext('2d');
         probe.font = `900 ${fs}px ${fontFamily}`;
         let w = probe.measureText(sign).width + Math.round(fs * 0.14) * (sign.length - 1);
-        const maxW = cw * 0.62;
+        const maxW = cw * 0.92;
         if (w > maxW) {
           fs = Math.max(8, Math.round(fs * (maxW / w)));
         }
