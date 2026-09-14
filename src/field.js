@@ -327,7 +327,7 @@ export function makeField(scene, options = {}) {
       // центральная часть). 70% комнаты — заметно, но гарантированно
       // внутри боковых стен с запасом на ореол обводки.
       // 1 px текстуры = (1.8·W)/2048 мировых единиц, ширина комнаты — W.
-      const targetW = cw * (0.7 / 1.8);
+      const targetW = cw * (0.3 / 1.8);
       let fs = Math.round(ch * 0.45);
       {
         const probe = document.createElement('canvas').getContext('2d');
