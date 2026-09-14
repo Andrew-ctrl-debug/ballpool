@@ -377,21 +377,21 @@ export function makeField(scene, options = {}) {
       eg.textBaseline = 'middle';
       eg.letterSpacing = ls;
       // Мягкий ореол вокруг обеих трубок
-      letterStroke(eg, Math.max(9, fs * 0.135));
+      letterStroke(eg, Math.max(4.5, fs * 0.0675));
       eg.globalAlpha = 0.35;
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       eg.globalAlpha = 1;
       // Внешняя трубка — толстая, яркая
-      letterStroke(eg, Math.max(4.5, fs * 0.045));
+      letterStroke(eg, Math.max(2.25, fs * 0.0225));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       // Промежуток между трубками (чёрный — пропуск света)
-      letterStroke(eg, Math.max(2.4, fs * 0.024));
+      letterStroke(eg, Math.max(1.2, fs * 0.012));
       eg.strokeStyle = '#000000';
       eg.stroke();
       // Внутренняя трубка — тонкая, яркая
-      letterStroke(eg, Math.max(1.5, fs * 0.015));
+      letterStroke(eg, Math.max(0.75, fs * 0.0075));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       const eTex = new THREE.CanvasTexture(ec);
@@ -405,19 +405,19 @@ export function makeField(scene, options = {}) {
       bgc.fillStyle = '#000000';
       bgc.fillRect(0, 0, cw, ch);
       // Плавный подъём от стены
-      letterStroke(bgc, Math.max(12, fs * 0.114));
+      letterStroke(bgc, Math.max(6, fs * 0.057));
       bgc.strokeStyle = '#4a4a4a';
       bgc.stroke();
       // Внешний гребень
-      letterStroke(bgc, Math.max(4.5, fs * 0.045));
+      letterStroke(bgc, Math.max(2.25, fs * 0.0225));
       bgc.strokeStyle = '#e0e0e0';
       bgc.stroke();
       // Промежуток
-      letterStroke(bgc, Math.max(2.4, fs * 0.024));
+      letterStroke(bgc, Math.max(1.2, fs * 0.012));
       bgc.strokeStyle = '#000000';
       bgc.stroke();
       // Внутренний гребень
-      letterStroke(bgc, Math.max(1.5, fs * 0.015));
+      letterStroke(bgc, Math.max(0.75, fs * 0.0075));
       bgc.strokeStyle = '#ffffff';
       bgc.stroke();
       const bumpTex = new THREE.CanvasTexture(bc);
