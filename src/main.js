@@ -19,6 +19,12 @@ import './loop.js'; // запускает игровой цикл (см. loop.js
 const canvas = document.querySelector('.hero-canvas');
 const hero = document.querySelector('.hero');
 
+// Конфигурация страницы (задаётся в HTML через <script>window.HERO_CONFIG=...;).
+// Позволяет одной и той же сцене быть разными страницами:
+//   sign        — текст на задней стене (напр. 'ГТО' или 'GRAND')
+//   blueBallLink — куда ведёт клик по голубому шару
+const config = window.HERO_CONFIG || {};
+
 /* ------------------------------------------------------------------
    ИНИЦИАЛИЗАЦИЯ
    ------------------------------------------------------------------ */
@@ -26,12 +32,12 @@ const hero = document.querySelector('.hero');
 const { scene, camera, renderer, resize, cornerLights } = createScene(canvas);
 
 // Создаём "поле" — набор шаров и их физику (см. field.js)
-const field = makeField(scene);
+const field = makeField(scene, config);
 field.bindCamera(camera);
 field.bindCornerLights(cornerLights);
 
 // Настраиваем реакцию на мышь (см. input.js)
-setupInput(hero, camera, field);
+setupInput(hero, camera, field, config);
 
 /* ------------------------------------------------------------------
    АДАПТИВНОСТЬ (изменение размера окна)

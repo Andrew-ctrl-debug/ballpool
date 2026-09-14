@@ -20,7 +20,8 @@ const centerZ = (frontZ + backZ) / 2;
 // Базовый радиус шара (как в оригинале); в resize шары получают 3 размера
 const radius = 0.32 / 1.5 / 1.5 * 0.7 * 1.3;
 
-export function makeField(scene) {
+export function makeField(scene, options = {}) {
+  const sign = options.sign || 'ГТО';
   // --- Зернистая "шероховатая" текстура (шум в духе SSGI у оригинала) ---
   function makeGrainTexture(size = 256) {
     const c = document.createElement('canvas');
@@ -330,7 +331,7 @@ export function makeField(scene) {
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
         ctx.lineWidth = width;
-        ctx.strokeText('ГТО', cw / 2, ch / 2);
+        ctx.strokeText(sign, cw / 2, ch / 2);
       };
 
       // Цветная карта: чисто белая стена, букв в цвете нет

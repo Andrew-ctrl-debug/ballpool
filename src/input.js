@@ -13,7 +13,8 @@
 
 import * as THREE from '../vendor/three/build/three.module.js';
 
-export function setupInput(hero, camera, field) {
+export function setupInput(hero, camera, field, options = {}) {
+  const blueBallLink = options.blueBallLink || 'https://гто.рус/';
   // Временный объект для хранения нормированной позиции курсора
   const pointerNDC = new THREE.Vector2();
 
@@ -38,9 +39,9 @@ export function setupInput(hero, camera, field) {
     // Пропускаем клики по ссылкам/кнопкам
     if (e.target.closest('a, button')) return;
     onPointerMove(e);
-    // Клик по голубому шару — переходим на сайт ГТО.РУС
+    // Клик по голубому шару — переход по ссылке
     if (field.hitTestBlueBall(pointerNDC.x, pointerNDC.y, camera)) {
-      window.location.href = 'https://гто.рус/';
+      window.location.href = blueBallLink;
       return;
     }
     // Можно добавить дополнительный "взрыв" при клике —

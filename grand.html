@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ball Pool — GRAND</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="hero" id="hero">
+    <canvas class="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-source"></div>
+    <canvas class="hero-grain" aria-hidden="true"></canvas>
+    <div class="hero-vignette" aria-hidden="true"></div>
+  </header>
+
+  <!-- Конфигурация: GRAND + ссылка на Telegram -->
+  <script>
+    window.HERO_CONFIG = {
+      sign: 'GRAND',
+      blueBallLink: 'https://t.me/+sfQPPPkLwEw5NzAy',
+    };
+  </script>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
