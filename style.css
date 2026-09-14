@@ -1,0 +1,99 @@
+/* ============================================================
+   ШАГ 1 (продолжение). СТИЛИ
+   ============================================================
+   Ключевая идея: .hero — контейнер-сцена, канвас занимает
+   ВЕСЬ его размер. Контент (текст) лежит поверх канваса.
+   */
+
+/* Сброс */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #151515;
+  background: #ffffff;
+}
+
+/* Блок-сцена. Важно: position: relative, чтобы канвас
+   внутри мог позиционироваться absolute относительно него. */
+.hero {
+  position: relative;
+  width: 100%;
+  /* Высота шапки — поменьше экрана, чтобы остальное было видно ниже */
+  min-height: 72svh;
+  overflow: hidden; /* ничего не вылезает за пределы */
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Канвас занимает весь hero и лежит ПОД текстом */
+.hero-canvas {
+  position: absolute;
+  inset: 0;            /* = top/right/bottom/left: 0 */
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+}
+
+/* Кинематографическое зерно — мерцающий шум поверх 3D-сцены */
+.hero-grain {
+  position: absolute;
+  left: -8%;
+  top: -8%;
+  width: 116%;
+  height: 116%;          /* чуть больше канваса, чтобы не было границ */
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.2;
+  mix-blend-mode: overlay;
+  image-rendering: pixelated;
+}
+
+/* Лёгкая виньетка затемняет края кадра */
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 42%, rgba(20,16,10,0) 55%, rgba(20,16,10,0.28) 100%);
+}
+
+/* Контент — ПОВЕРХ канваса */
+.hero-source {
+  position: relative;
+  z-index: 1;
+  pointer-events: none; /* чтобы клики не мешали канвасу ловить мышь */
+}
+.hero-source a { pointer-events: auto; } /* а вот ссылку кликать можно */
+
+/* Просто красивое оформление заголовка */
+.hero-source h1 {
+  font-size: clamp(40px, 7vw, 96px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #151515;
+  text-shadow: 0 2px 12px rgba(255,255,255,0.9); /* читаемость на белом фоне */
+}
+.hero-source p {
+  margin-top: 16px;
+  font-size: clamp(16px, 2vw, 22px);
+  color: #555;
+}
+.hero-source a {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 14px 28px;
+  background: #151515;
+  color: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 15px;
+}

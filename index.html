@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <!--
+    ============================================================
+    ШАГ 1. HTML-КАРКАС
+    ============================================================
+    Здесь почти всё стандартно. Главное, что нам нужно, — это
+    один <canvas>, куда Three.js будет рисовать нашу 3D-сцену.
+
+    canvas лежит ПОД текстом (z-index: 0), а текст — ПОВЕРХ него.
+    Так шары визуально "плавают" за заголовком сайта.
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ball Pool — туториал по Three.js</title>
+
+  <!-- Таблица стилей проекта -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!--
+    Блок .hero — это "шапка" страницы.
+    Позиционируется как position: relative, а внутри — absolute-канвас.
+    Размер канваса = размер этого блока (мы зададим его в CSS).
+  -->
+  <header class="hero" id="hero">
+    <!--
+      Вот сюда Three.js будет рисовать. Мы не пишем ничего внутри,
+      канвас создаст сам Three.js, либо мы возьмём этот через querySelector.
+    -->
+    <canvas class="hero-canvas" aria-hidden="true"></canvas>
+
+    <!--
+      Контент, который лежит ПОВЕРХ канваса (z-index выше).
+      Шары будут ОБХОДИТЬ эти элементы, чтобы текст читался.
+      У элементов стоит data-hero-obstacle, чтобы JS знал,
+      где находятся "препятствия".
+    -->
+    <div class="hero-source">
+    </div>
+
+    <!-- Кинематографическое зерно и виньетка (поверх канваса) -->
+    <canvas class="hero-grain" aria-hidden="true"></canvas>
+    <div class="hero-vignette" aria-hidden="true"></div>
+  </header>
+
+  <!-- Подключаем главный модуль скрипта -->
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
