@@ -387,9 +387,8 @@ export function makeField(scene, options = {}) {
       eg.stroke();
       eg.globalAlpha = 1;
       // Сплошная заливка букв — яркая
-      letterFill(eg);
       eg.fillStyle = '#ffffff';
-      eg.fill();
+      letterFill(eg);
       const eTex = new THREE.CanvasTexture(ec);
       eTex.wrapS = eTex.wrapT = THREE.ClampToEdgeWrapping;
       eTex.colorSpace = THREE.SRGBColorSpace;
@@ -405,9 +404,8 @@ export function makeField(scene, options = {}) {
       bgc.strokeStyle = '#4a4a4a';
       bgc.stroke();
       // Сплошная выпуклость букв
-      letterFill(bgc);
       bgc.fillStyle = '#e0e0e0';
-      bgc.fill();
+      letterFill(bgc);
       const bumpTex = new THREE.CanvasTexture(bc);
       bumpTex.wrapS = bumpTex.wrapT = THREE.ClampToEdgeWrapping;
 
