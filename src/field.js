@@ -324,11 +324,18 @@ export function makeField(scene, options = {}) {
       const fontFamily = '"TT Squares", "TTSquares", "Bebas Neue", "Arial Black", Impact, sans-serif';
       let fs = Math.round(ch * 0.28);
       {
-        // Пробуем измерить ширину текста и при необходимости уменьшаем шрифт
+        // Пробуем измерить ширину текста и при необходимости уменьшаем шрифт.
+        // Учитываем межбуквенный разрыв + запас на внешний ореол обводки,
+        // чтобы крайние буквы (G и D) не срезались границей стены даже впритык.
         const probe = document.createElement('canvas').getContext('2d');
         probe.font = `900 ${fs}px ${fontFamily}`;
-        let w = probe.measureText(sign).width + Math.round(fs * 0.14) * (sign.length - 1);
-        const maxW = cw * 0.72;
+        probe.lineJoin = 'round';
+        probe.lineCap = 'round';
+        probe.lineWidth = Math.max(9, fs * 0.135);
+        const w = probe.measureText(sign).width
+          + Math.round(fs * 0.14) * (sign.length - 1)
+          + Math.max(9, fs * 0.135);
+        const maxW = cw * 0.96;
         if (w > maxW) {
           fs = Math.max(8, Math.round(fs * (maxW / w)));
         }
