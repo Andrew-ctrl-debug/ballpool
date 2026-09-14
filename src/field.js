@@ -312,15 +312,28 @@ export function makeField(scene, options = {}) {
       walls[i].position.set(p[0], p[1], p[2]);
     });
 
-    // Задняя стена (индекс 2) — получает bump-текстуру с буквами ГТО
+    // Задняя стена (индекс 2) — получает bump-текстуру с буквами sign
     if (!walls[2].material || walls[2].material === wallMaterial) {
       walls[2].material = backWallMaterial;
     }
     {
       const aspect = W / H;
       const cw = 2048, ch = Math.round(cw / aspect);
-      const fs = Math.round(ch * 0.28);
-      const textFont = `900 ${fs}px "TT Squares", "TTSquares", "Bebas Neue", "Arial Black", Impact, sans-serif`;
+      // Размер шрифта подбираем по реальной ширине надписи, чтобы
+      // любой текст (и «ГТО», и «GRAND») влезал на стену целиком.
+      const fontFamily = '"TT Squares", "TTSquares", "Bebas Neue", "Arial Black", Impact, sans-serif';
+      let fs = Math.round(ch * 0.28);
+      {
+        // Пробуем измерить ширину текста и при необходимости уменьшаем шрифт
+        const probe = document.createElement('canvas').getContext('2d');
+        probe.font = `900 ${fs}px ${fontFamily}`;
+        let w = probe.measureText(sign).width + Math.round(fs * 0.14) * (sign.length - 1);
+        const maxW = cw * 0.62;
+        if (w > maxW) {
+          fs = Math.max(8, Math.round(fs * (maxW / w)));
+        }
+      }
+      const textFont = `900 ${fs}px ${fontFamily}`;
       const ls = `${Math.round(fs * 0.14)}px`;
 
       const letterStroke = (ctx, width) => {
