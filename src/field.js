@@ -214,9 +214,9 @@ export function makeField(scene) {
         const dx = b.p.x - closest.x, dy = b.p.y - closest.y, dz = b.p.z - closest.z;
         const d = Math.hypot(dx, dy, dz);
         if (d < 1.2) {
-          const force = (1 - d / 1.2) * dt * 30 / (d || 1);
+          const force = (1 - d / 1.2) * dt * 48 / (d || 1);
           b.v.x += dx * force;
-          b.v.y += dy * force;
+          b.v.y += Math.max(0.35, dy) * force;
           b.v.z += dz * force;
         }
       }
