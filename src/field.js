@@ -377,17 +377,17 @@ export function makeField(scene, options = {}) {
       eg.textBaseline = 'middle';
       eg.letterSpacing = ls;
       // Мягкий ореол вокруг обеих трубок (свечение)
-      letterStroke(eg, Math.max(2, fs * 0.04));
+      letterStroke(eg, Math.max(3, fs * 0.07));
       eg.globalAlpha = 0.25;
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       eg.globalAlpha = 1;
-      // Внешняя полоса двойного контура — тонкая, яркая
-      letterStroke(eg, Math.max(2, fs * 0.05));
+      // Внешняя полоса двойного контура — шире зазора, чтобы остаться видимой
+      letterStroke(eg, Math.max(4, fs * 0.1));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       // Тёмный зазор — шире, чтобы полосы были дальше друг от друга
-      letterStroke(eg, Math.max(1.5, fs * 0.03));
+      letterStroke(eg, Math.max(3.5, fs * 0.07));
       eg.strokeStyle = '#000000';
       eg.stroke();
       // Внутренняя полоса двойного контура — тонкая, яркая
@@ -409,11 +409,11 @@ export function makeField(scene, options = {}) {
       bgc.strokeStyle = '#4a4a4a';
       bgc.stroke();
       // Внешний гребень
-      letterStroke(bgc, Math.max(1, fs * 0.024));
+      letterStroke(bgc, Math.max(2, fs * 0.05));
       bgc.strokeStyle = '#e0e0e0';
       bgc.stroke();
       // Промежуток
-      letterStroke(bgc, Math.max(0.75, fs * 0.015));
+      letterStroke(bgc, Math.max(1.75, fs * 0.035));
       bgc.strokeStyle = '#000000';
       bgc.stroke();
       // Внутренний гребень
