@@ -338,7 +338,7 @@ export function makeField(scene, options = {}) {
           + Math.max(9, fs * 0.135);
         fs = Math.max(12, Math.round(fs * (targetW / w)));
       } else {
-        fs = Math.round(ch * 0.32 / 3 * 1.5 * 2);
+        fs = Math.round(ch * 0.32 / 3 * 1.5 * 2 * 0.5);
       }
       const textFont = `900 ${fs}px ${fontFamily}`;
       const ls = `${Math.round(fs * 0.14)}px`;
@@ -377,21 +377,21 @@ export function makeField(scene, options = {}) {
       eg.textBaseline = 'middle';
       eg.letterSpacing = ls;
       // Мягкий ореол вокруг обеих трубок
-      letterStroke(eg, Math.max(4.5, fs * 0.0675));
+      letterStroke(eg, Math.max(2.25, fs * 0.03375));
       eg.globalAlpha = 0.35;
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       eg.globalAlpha = 1;
       // Внешняя трубка — толстая, яркая (шире, чем зазор, чтобы осталась наружной обводкой)
-      letterStroke(eg, Math.max(8, fs * 0.08));
+      letterStroke(eg, Math.max(4, fs * 0.04));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
-      // Промежуток между трубками (чёрный — пропуск света, ×3)
-      letterStroke(eg, Math.max(7.2, fs * 0.072));
+      // Промежуток между трубками (чёрный — пропуск света)
+      letterStroke(eg, Math.max(3.6, fs * 0.036));
       eg.strokeStyle = '#000000';
       eg.stroke();
       // Внутренняя трубка — тонкая, яркая
-      letterStroke(eg, Math.max(0.75, fs * 0.0075));
+      letterStroke(eg, Math.max(0.375, fs * 0.00375));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       const eTex = new THREE.CanvasTexture(ec);
@@ -405,19 +405,19 @@ export function makeField(scene, options = {}) {
       bgc.fillStyle = '#000000';
       bgc.fillRect(0, 0, cw, ch);
       // Плавный подъём от стены
-      letterStroke(bgc, Math.max(6, fs * 0.057));
+      letterStroke(bgc, Math.max(3, fs * 0.0285));
       bgc.strokeStyle = '#4a4a4a';
       bgc.stroke();
       // Внешний гребень
-      letterStroke(bgc, Math.max(2.25, fs * 0.0225));
+      letterStroke(bgc, Math.max(1.125, fs * 0.01125));
       bgc.strokeStyle = '#e0e0e0';
       bgc.stroke();
       // Промежуток
-      letterStroke(bgc, Math.max(1.2, fs * 0.012));
+      letterStroke(bgc, Math.max(0.6, fs * 0.006));
       bgc.strokeStyle = '#000000';
       bgc.stroke();
       // Внутренний гребень
-      letterStroke(bgc, Math.max(0.75, fs * 0.0075));
+      letterStroke(bgc, Math.max(0.375, fs * 0.00375));
       bgc.strokeStyle = '#ffffff';
       bgc.stroke();
       const bumpTex = new THREE.CanvasTexture(bc);
