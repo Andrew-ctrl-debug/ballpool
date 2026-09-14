@@ -377,21 +377,21 @@ export function makeField(scene, options = {}) {
       eg.textBaseline = 'middle';
       eg.letterSpacing = ls;
       // Мягкий ореол вокруг обеих трубок (свечение)
-      letterStroke(eg, Math.max(3, fs * 0.04));
-      eg.globalAlpha = 0.25;
+      letterStroke(eg, Math.max(2.5, fs * 0.05));
+      eg.globalAlpha = 0.3;
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       eg.globalAlpha = 1;
-      // Внешняя полоса двойного контура — тонкая, яркая
-      letterStroke(eg, Math.max(4.5, fs * 0.045));
+      // Внешняя полоса двойного контура — широкая, чтобы зазор её не съедал
+      letterStroke(eg, Math.max(3, fs * 0.06));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
-      // Тёмный зазор между полосами — шире, чтобы линии были дальше друг от друга
-      letterStroke(eg, Math.max(3.6, fs * 0.036));
+      // Тёмный зазор — вырезает середину, оставляя видимую внешнюю линию
+      letterStroke(eg, Math.max(0.9, fs * 0.018));
       eg.strokeStyle = '#000000';
       eg.stroke();
       // Внутренняя полоса двойного контура — тонкая, яркая
-      letterStroke(eg, Math.max(0.7, fs * 0.0075));
+      letterStroke(eg, Math.max(0.6, fs * 0.012));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       const eTex = new THREE.CanvasTexture(ec);
@@ -405,19 +405,19 @@ export function makeField(scene, options = {}) {
       bgc.fillStyle = '#000000';
       bgc.fillRect(0, 0, cw, ch);
       // Плавный подъём от стены
-      letterStroke(bgc, Math.max(3, fs * 0.0285));
+      letterStroke(bgc, Math.max(1.5, fs * 0.0285));
       bgc.strokeStyle = '#4a4a4a';
       bgc.stroke();
       // Внешний гребень
-      letterStroke(bgc, Math.max(1.125, fs * 0.01125));
+      letterStroke(bgc, Math.max(1.4, fs * 0.03));
       bgc.strokeStyle = '#e0e0e0';
       bgc.stroke();
       // Промежуток
-      letterStroke(bgc, Math.max(0.6, fs * 0.006));
+      letterStroke(bgc, Math.max(0.45, fs * 0.009));
       bgc.strokeStyle = '#000000';
       bgc.stroke();
       // Внутренний гребень
-      letterStroke(bgc, Math.max(0.375, fs * 0.00375));
+      letterStroke(bgc, Math.max(0.3, fs * 0.006));
       bgc.strokeStyle = '#ffffff';
       bgc.stroke();
       const bumpTex = new THREE.CanvasTexture(bc);
