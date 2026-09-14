@@ -387,7 +387,7 @@ export function makeField(scene, options = {}) {
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       // Промежуток между трубками (чёрный — пропуск света)
-      letterStroke(eg, Math.max(1.2, fs * 0.012));
+      letterStroke(eg, Math.max(2.4, fs * 0.024));
       eg.strokeStyle = '#000000';
       eg.stroke();
       // Внутренняя трубка — тонкая, яркая
