@@ -376,22 +376,22 @@ export function makeField(scene, options = {}) {
       eg.textAlign = 'center';
       eg.textBaseline = 'middle';
       eg.letterSpacing = ls;
-      // Мягкий ореол вокруг обеих трубок
-      letterStroke(eg, Math.max(2.25, fs * 0.03375));
+      // Мягкий ореол вокруг обеих трубок (свечение)
+      letterStroke(eg, Math.max(3, fs * 0.05));
       eg.globalAlpha = 0.35;
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       eg.globalAlpha = 1;
-      // Внешняя трубка — толстая, яркая (шире, чем зазор, чтобы осталась наружной обводкой)
-      letterStroke(eg, Math.max(4, fs * 0.04));
+      // Внешняя полоса двойного контура — широкая, яркая
+      letterStroke(eg, Math.max(5, fs * 0.055));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
-      // Промежуток между трубками (чёрный — пропуск света)
-      letterStroke(eg, Math.max(3.6, fs * 0.036));
+      // Тёмный зазор между полосами (узкий, чтобы внешняя полоса осталась видимой)
+      letterStroke(eg, Math.max(1.8, fs * 0.016));
       eg.strokeStyle = '#000000';
       eg.stroke();
-      // Внутренняя трубка — тонкая, яркая
-      letterStroke(eg, Math.max(0.375, fs * 0.00375));
+      // Внутренняя полоса двойного контура — тонкая, яркая
+      letterStroke(eg, Math.max(0.9, fs * 0.009));
       eg.strokeStyle = '#ffffff';
       eg.stroke();
       const eTex = new THREE.CanvasTexture(ec);
