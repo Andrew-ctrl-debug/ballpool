@@ -319,17 +319,15 @@ export function makeField(scene, options = {}) {
     {
       const aspect = W / H;
       const cw = 2048, ch = Math.round(cw / aspect);
-      // Размер шрифта подбираем по реальной ширине надписи, чтобы
-      // любой текст (и «ГТО», и «GRAND») влезал на стену целиком.
       const fontFamily = '"TT Squares", "TTSquares", "Bebas Neue", "Arial Black", Impact, sans-serif';
-      // Надпись занимает фиксированную долю ШИРИНЫ КОМНАТЫ (а не всей
-      // текстуры: задняя стена в 1.8 раза шире комнаты, но видна её
-      // центральная часть). 70% комнаты — заметно, но гарантированно
-      // внутри боковых стен с запасом на ореол обводки.
+      // По умолчанию размер как в оригинале («ГТО»). Если задан options.signWidth
+      // (доля ширины комнаты), подгоняем шрифт так, чтобы надпись занимала
+      // ровно эту долю: задняя стена в 1.8 раза шире комнаты, поэтому
       // 1 px текстуры = (1.8·W)/2048 мировых единиц, ширина комнаты — W.
-      const targetW = cw * (0.3 / 1.8);
-      let fs = Math.round(ch * 0.45);
-      {
+      let fs;
+      if (options.signWidth !== undefined) {
+        const targetW = cw * (options.signWidth / 1.8);
+        fs = Math.round(ch * 0.45);
         const probe = document.createElement('canvas').getContext('2d');
         probe.font = `900 ${fs}px ${fontFamily}`;
         probe.lineJoin = 'round';
@@ -339,6 +337,8 @@ export function makeField(scene, options = {}) {
           + Math.round(fs * 0.14) * (sign.length - 1)
           + Math.max(9, fs * 0.135);
         fs = Math.max(12, Math.round(fs * (targetW / w)));
+      } else {
+        fs = Math.round(ch * 0.32);
       }
       const textFont = `900 ${fs}px ${fontFamily}`;
       const ls = `${Math.round(fs * 0.14)}px`;
