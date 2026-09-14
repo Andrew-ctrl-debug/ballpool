@@ -67,7 +67,7 @@ export function makeField(scene) {
     roughness: 0.95,
     bumpScale: 0.35,
     emissive: 0xffffff,
-    emissiveIntensity: 5,
+    emissiveIntensity: 18,
   });
 
   // --- Геометрия и материалы шаров ---
@@ -98,9 +98,9 @@ export function makeField(scene) {
   let attractionUntil = 0;
   let blueHovered = false;
 
-  // Светящийся шар — один (свет уменьшен): 6 → 2 → 1 → 0.33 → 0.165
-  const glowLights = Array.from({ length: 1 }, () => {
-    const l = new THREE.PointLight(0xffffff, 0.165, 2, 2);
+  // Светящиеся шары — пять (как в оригинале)
+  const glowLights = Array.from({ length: 5 }, () => {
+    const l = new THREE.PointLight(0xffffff, 0.33, 2, 2);
     l.castShadow = false;
     scene.add(l);
     return l;
@@ -116,7 +116,7 @@ export function makeField(scene) {
   scene.add(cursorLight);
 
   // Неоновый свет от букв ГТО — яркий белый, заметный на стене вокруг букв
-  const neonLight = new THREE.PointLight(0xffffff, 6, 7, 2);
+  const neonLight = new THREE.PointLight(0xffffff, 12, 7, 2);
   neonLight.castShadow = false;
   scene.add(neonLight);
 
@@ -438,7 +438,7 @@ export function makeField(scene) {
         const target = index + Math.floor(Math.random() * (candidates.length - index));
         [candidates[index], candidates[target]] = [candidates[target], candidates[index]];
       }
-      const glowCount = 1;
+      const glowCount = 5;
       glowIndices = candidates.slice(0, glowCount);
       mesh = new THREE.InstancedMesh(ballGeo, ballMaterial, count);
       mesh.castShadow = true; mesh.receiveShadow = true; mesh.frustumCulled = false;

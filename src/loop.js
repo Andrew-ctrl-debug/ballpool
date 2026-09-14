@@ -15,6 +15,10 @@
    ============================================================ */
 
 import { renderer, scene, camera, field } from './main.js';
+import { createPostFX } from './postfx.js';
+
+// Пост-обработка: afterimage/"рябь"
+const postFX = createPostFX(renderer);
 
 // Флаг: крутится ли цикл сейчас
 let running = false;
@@ -44,9 +48,13 @@ function frame(now) {
     accumulator -= FIXED_DT;
   }
 
-  // Отрисовываем кадр
-  field.drawField();
-  renderer.render(scene, camera);
+  // Отрисовываем кадр (через пост-обработку — эффект "ряби")
+  postFX.render(
+    renderer.domElement.width,
+    renderer.domElement.height,
+    () => field.drawField(),
+    () => renderer.render(scene, camera)
+  );
 
   // Продолжаем цикл в следующем кадре
   running = true;
