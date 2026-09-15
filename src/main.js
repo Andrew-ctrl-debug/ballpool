@@ -10,10 +10,10 @@
 
 // Импортируем три.js и наши модули-шаги
 import * as THREE from '../vendor/three/build/three.module.js';
-import { createScene } from './setup.js';
-import { makeField } from './field.js';
-import { setupInput } from './input.js';
-import './loop.js'; // запускает игровой цикл (см. loop.js)
+import { createScene } from './setup.js?v=16';
+import { makeField } from './field.js?v=16';
+import { setupInput } from './input.js?v=16';
+import './loop.js?v=16'; // запускает игровой цикл (см. loop.js)
 
 // Находим на странице канвас и контейнер hero
 const canvas = document.querySelector('.hero-canvas');

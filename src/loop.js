@@ -14,8 +14,8 @@
    целыми порциями. Это то же, что в оригинале.
    ============================================================ */
 
-import { renderer, scene, camera, field } from './main.js';
-import { createPostFX } from './postfx.js';
+import { renderer, scene, camera, field } from './main.js?v=16';
+import { createPostFX } from './postfx.js?v=16';
 
 // Пост-обработка: afterimage/"рябь". Создаём лениво, на первом кадре:
 // loop.js подключается из main.js (циклический импорт), и в момент
