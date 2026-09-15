@@ -64,18 +64,6 @@ export function makeField(scene, options = {}) {
     return m;
   });
 
-  // --- Светящиеся линии по углам комнаты (неоновый каркас) ---
-  const cornerGeo = new THREE.BoxGeometry(1, 1, 1);
-  const cornerMat = new THREE.MeshBasicMaterial({
-    color: 0xffffff,
-    toneMapped: false,
-  });
-  const cornerStrips = Array.from({ length: 8 }, () => {
-    const m = new THREE.Mesh(cornerGeo, cornerMat);
-    m.frustumCulled = false;
-    room.add(m);
-    return m;
-  });
   const backWallMaterial = new THREE.MeshStandardMaterial({
     color: 0xffffff,
     roughness: 0.95,
@@ -332,7 +320,6 @@ export function makeField(scene, options = {}) {
     if (!walls[2].material || walls[2].material === wallMaterial) {
       walls[2].material = backWallMaterial;
     }
-    let cornerStripW = 0.03; // толщина полос = толщина букв (заполняется ниже)
     {
       const aspect = W / H;
       const cw = 2048, ch = Math.round(cw / aspect);
@@ -357,9 +344,6 @@ export function makeField(scene, options = {}) {
       } else {
         fs = Math.round(ch * 0.1);
       }
-      // Толщина полос по углам = толщине штриха букв:
-      // 1px текстуры = (1.8·W)/2048 мировых единиц, штрих буквы ≈ fs·0.18 px
-      cornerStripW = fs * 0.18 * ((1.8 * W) / cw);
       const textFont = `900 ${fs}px ${fontFamily}`;
       const ls = `${Math.round(fs * 0.14)}px`;
 
@@ -436,29 +420,6 @@ export function makeField(scene, options = {}) {
       backWallMaterial.bumpMap = bumpTex;
       backWallMaterial.emissiveMap = eTex;
       backWallMaterial.needsUpdate = true;
-    }
-
-    // Светящиеся линии по углам комнаты (неоновый каркас).
-    // Задняя стена стоит на z = -D/2 (внутренняя грань); видимая глубина до frontZ.
-    {
-      const bw = cornerStripW;   // толщина полосы = толщина букв
-      const bz = -D / 2;         // внутренняя грань задней стены
-      const stripSpecs = [
-        // нижние/верхние рёбра вдоль глубины (z) у боковых стен
-        [[bw, bw, D], [-W / 2, 0, centerZ]],
-        [[bw, bw, D], [ W / 2, 0, centerZ]],
-        [[bw, bw, D], [-W / 2, H, centerZ]],
-        [[bw, bw, D], [ W / 2, H, centerZ]],
-        // рёбра у задней стены
-        [[W, bw, bw], [0, 0, bz]],
-        [[W, bw, bw], [0, H, bz]],
-        [[bw, H, bw], [-W / 2, H / 2, bz]],
-        [[bw, H, bw], [ W / 2, H / 2, bz]],
-      ];
-      stripSpecs.forEach(([s, p], i) => {
-        cornerStrips[i].scale.set(s[0], s[1], s[2]);
-        cornerStrips[i].position.set(p[0], p[1], p[2]);
-      });
     }
 
     // Количество шаров ~ под ширину комнаты (как в оригинале)
